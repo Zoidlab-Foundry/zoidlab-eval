@@ -16,6 +16,7 @@ import pricing
 import llm
 import eval_engine
 import exporter
+import envelope
 import seed_eval
 from auth import session, require_pro, relay_key, entitlement
 
@@ -216,12 +217,17 @@ def get_run(rid: str, request: Request, only_failed: bool = False, owner: str = 
 
 
 # ---- export -------------------------------------------------------------
+def _wrapped(r, owner):
+    payload = exporter.to_package(r, db.run_results(r["id"]))
+    return envelope.wrap("eval", "eval_report", r["id"], "1.0.0", payload, nyquest_user_id=owner)
+
+
 @app.get("/api/runs/{rid}/export/json")
 def export_json(rid: str, request: Request, owner: str = Depends(require_owner)):
     r = db.get_run(rid, owner)
     if not r:
         raise HTTPException(404, "not_found")
-    return exporter.to_package(r, db.run_results(rid))
+    return _wrapped(r, owner)
 
 
 @app.get("/api/runs/{rid}/export/yaml")
@@ -229,4 +235,4 @@ def export_yaml(rid: str, request: Request, owner: str = Depends(require_owner))
     r = db.get_run(rid, owner)
     if not r:
         raise HTTPException(404, "not_found")
-    return PlainTextResponse(exporter.to_yaml(exporter.to_package(r, db.run_results(rid))))
+    return PlainTextResponse(exporter.to_yaml(_wrapped(r, owner)))
