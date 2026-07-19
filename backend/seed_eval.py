@@ -1,6 +1,6 @@
 """Seed a demo target + test set. Criteria are seeded in database.init(). No runs are seeded
 — eval results only come from real relay runs the user triggers, so nothing is fabricated."""
-import database as db
+import db_pg as db
 
 
 def run():

@@ -10,7 +10,7 @@ import json
 import re
 import llm
 import pricing
-import database as db
+import db_pg as db
 
 JUDGE_MODEL = "anthropic/claude-sonnet-5"  # relay id used for scoring
 
