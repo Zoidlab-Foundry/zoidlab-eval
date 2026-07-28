@@ -80,7 +80,7 @@ export default function Evaluate() {
             <label className="block text-[12px] text-dim">Ready if ≥ % pass<input value={readiness} onChange={(e) => setReadiness(e.target.value)} className="mt-1 w-full rounded-lg border border-line bg-panel2 px-3 py-2 text-[13px] text-ink tnum" /></label>
           </div>
 
-          <button onClick={start} disabled={busy || !tid || !tsid || !critIds.length || (meta && !meta.relay_available)} className="mt-4 w-full rounded-lg bg-vi px-4 py-2.5 text-[13px] font-semibold text-white hover:opacity-90 disabled:opacity-50">
+          <button data-assist="run-eval" onClick={start} disabled={busy || !tid || !tsid || !critIds.length || (meta && !meta.relay_available)} className="mt-4 w-full rounded-lg bg-vi px-4 py-2.5 text-[13px] font-semibold text-white hover:opacity-90 disabled:opacity-50">
             {busy ? "Evaluating live…" : "Run evaluation"}
           </button>
           {err && <p className="mt-2 text-[12px] text-bad">{err}</p>}

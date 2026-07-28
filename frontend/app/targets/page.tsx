@@ -28,7 +28,7 @@ export default function Targets() {
           <h1 className="text-[24px] font-semibold">Targets</h1>
           <p className="mt-1 text-[13px] text-dim">What you're evaluating — a model plus the system prompt that defines its behavior.</p>
         </div>
-        <button onClick={() => setOpen(true)} className="rounded-lg bg-vi px-4 py-2 text-[13px] font-semibold text-white hover:opacity-90">+ New target</button>
+        <button data-assist="new-target" onClick={() => setOpen(true)} className="rounded-lg bg-vi px-4 py-2 text-[13px] font-semibold text-white hover:opacity-90">+ New target</button>
       </div>
 
       <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
