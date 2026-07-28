@@ -31,8 +31,11 @@ on both the frontend gate and every backend data endpoint, fail-closed).
 
 ## Stack
 
-- **Backend**: FastAPI + SQLite. `eval_engine.py` (real generate + judge, measured), `llm.py`
-  (relay client), `pricing.py` (cost from tokens). Runs execute in a background task, polled.
+- **Backend**: FastAPI + **Postgres with per-tenant FORCE row-level security** (every query runs
+  as the non-superuser `app_rls` role keyed on `app.current_owner`, so tenant isolation is
+  enforced by the database, not by application code). `eval_engine.py` (real generate + judge,
+  measured), `llm.py` (relay client), `pricing.py` (cost from tokens). Runs execute in a
+  background task, polled.
 - **Frontend**: Next.js 15 + React 19 + Tailwind. Shared `zb_session` SSO + reusable Pro gate.
 - **Deploy** (zoidberg): `eval-api` (:8703) + `eval-web` (:3703) behind the Cloudflare tunnel at
   `eval.zoidlab.ai`.
