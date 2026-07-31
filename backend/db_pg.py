@@ -164,7 +164,7 @@ def create_target(data, owner):
 
 def delete_target(tid, owner):
     t = get_target(tid, owner)
-    if not t or (t.get("owner_user_id") and t["owner_user_id"] != owner):
+    if not t or t.get("owner_user_id") != owner:
         return False
     with _tx(owner) as cur:
         cur.execute("DELETE FROM targets WHERE id=%s", (tid,))
@@ -239,7 +239,7 @@ def create_testset(data, owner):
 
 def delete_testset(tsid, owner):
     t = get_testset(tsid, owner)
-    if not t or (t.get("owner_user_id") and t["owner_user_id"] != owner):
+    if not t or t.get("owner_user_id") != owner:
         return False
     with _tx(owner) as cur:
         cur.execute("DELETE FROM testsets WHERE id=%s", (tsid,))
